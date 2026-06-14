@@ -13,7 +13,7 @@ log('start');
 const ws = new WebSocket('wss://vka-messenger.ru/ws');
 
 ws.onopen = () => log('ws_open');
-ws.onerror = () => log('ws_error');
+ws.onerror = (e) => log('ws_error');
 
 const state = {};
 
